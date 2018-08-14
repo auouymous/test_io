@@ -101,11 +101,14 @@ minetest.register_abm({
 			if node_io.can_take_item(take_pos, take_node, "D") and node_io.can_put_item(put_pos, put_node, "U") then
 				for i = 1, node_io.get_item_size(take_pos, take_node, "D") do
 					local item = node_io.get_item_name(take_pos, take_node, "D", i)
-					if item ~= "" and node_io.room_for_item(put_pos, put_node, "U", ItemStack(item.." "..n)) then
-						local itemstack = node_io.take_item(take_pos, take_node, "D", nil, item, n)
-						if itemstack then
-							node_io.put_item(put_pos, put_node, put_side, nil, itemstack)
-							break
+					if item ~= "" then
+						local room = node_io.room_for_item(put_pos, put_node, "U", ItemStack(item), n)
+						if room > 0 then
+							local itemstack = node_io.take_item(take_pos, take_node, "D", nil, item, room)
+							if itemstack then
+								node_io.put_item(put_pos, put_node, put_side, nil, itemstack)
+								break
+							end
 						end
 					end
 				end
@@ -119,11 +122,14 @@ minetest.register_abm({
 			if node_io.can_take_liquid(take_pos, take_node, "D") and node_io.can_put_liquid(put_pos, put_node, "U") then
 				for i = 1, node_io.get_liquid_size(take_pos, take_node, "D") do
 					local item = node_io.get_liquid_name(take_pos, take_node, "D", i)
-					if item ~= "" and node_io.room_for_liquid(put_pos, put_node, "U", item, mb) then
-						local liquidstack = node_io.take_liquid(take_pos, take_node, "D", nil, item, mb)
-						if liquidstack then
-							node_io.put_liquid(put_pos, put_node, put_side, nil, liquidstack.name, liquidstack.millibuckets)
-							break
+					if item ~= "" then
+						local room_mb = node_io.room_for_liquid(put_pos, put_node, "U", item, mb)
+						if room_mb > 0 then
+							local liquidstack = node_io.take_liquid(take_pos, take_node, "D", nil, item, room_mb)
+							if liquidstack then
+								node_io.put_liquid(put_pos, put_node, put_side, nil, liquidstack.name, liquidstack.millibuckets)
+								break
+							end
 						end
 					end
 				end
