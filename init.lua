@@ -106,7 +106,7 @@ minetest.register_abm({
 						if room > 0 then
 							local itemstack = node_io.take_item(take_pos, take_node, "D", nil, item, room)
 							if itemstack then
-								node_io.put_item(put_pos, put_node, put_side, nil, itemstack)
+								node_io.put_item(put_pos, put_node, "U", nil, itemstack)
 								break
 							end
 						end
@@ -127,7 +127,7 @@ minetest.register_abm({
 						if room_mb > 0 then
 							local liquidstack = node_io.take_liquid(take_pos, take_node, "D", nil, item, room_mb)
 							if liquidstack then
-								node_io.put_liquid(put_pos, put_node, put_side, nil, liquidstack.name, liquidstack.millibuckets)
+								node_io.put_liquid(put_pos, put_node, "U", nil, liquidstack.name, liquidstack.millibuckets)
 								break
 							end
 						end
