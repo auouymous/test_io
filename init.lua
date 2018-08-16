@@ -106,7 +106,10 @@ minetest.register_abm({
 						if room > 0 then
 							local itemstack = node_io.take_item(take_pos, take_node, "D", nil, stack, room)
 							if itemstack then
-								node_io.put_item(put_pos, put_node, "U", nil, itemstack)
+								local leftovers = node_io.put_item(put_pos, put_node, "U", nil, itemstack)
+								if not leftovers:is_empty() then
+									minetest.log("warning", "lost "..leftovers:get_count().." "..leftovers:get_name().." in test-IO item transfer node at "..minetest.pos_to_string(pos))
+								end
 								break
 							end
 						end
@@ -127,7 +130,10 @@ minetest.register_abm({
 						if room_mb > 0 then
 							local liquidstack = node_io.take_liquid(take_pos, take_node, "D", nil, item, room_mb)
 							if liquidstack then
-								node_io.put_liquid(put_pos, put_node, "U", nil, liquidstack.name, liquidstack.millibuckets)
+								local leftover_mb = node_io.put_liquid(put_pos, put_node, "U", nil, liquidstack.name, liquidstack.millibuckets)
+								if leftover_mb > 0 then
+									minetest.log("warning", "lost "..leftover_mb.."mB "..liquidstack.name.." in test-IO liquid transfer node at "..minetest.pos_to_string(pos))
+								end
 								break
 							end
 						end
