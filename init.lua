@@ -1,5 +1,9 @@
 test_io = {}
 
+local function set_infotext(meta, value)
+	meta:set_string("infotext", "Transfer: "..value.."   (right-click to change)")
+end
+
 minetest.register_node("test_io:item", {
 	description = "Test-IO Item",
 	drawtype = "nodebox",
@@ -21,7 +25,7 @@ minetest.register_node("test_io:item", {
 		local meta = minetest.get_meta(pos)
 		if meta ~= nil then
 			meta:set_int("n", 0)
-			meta:set_string("infotext", "0")
+			set_infotext(meta, 0)
 		end
 	end,
 	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
@@ -30,7 +34,7 @@ minetest.register_node("test_io:item", {
 			local n = meta:get_int("n")
 			if n == 99 then n = 0 elseif n == 0 then n = 1 elseif n == 1 then n = 33 else n = n + 33 end
 			meta:set_int("n", n)
-			meta:set_string("infotext", n)
+			set_infotext(meta, n)
 		end
 	end
 })
@@ -66,7 +70,7 @@ minetest.register_node("test_io:liquid", {
 		local meta = minetest.get_meta(pos)
 		if meta ~= nil then
 			meta:set_int("mb", 0)
-			meta:set_string("infotext", "0mB")
+			set_infotext(meta, "0mB")
 		end
 	end,
 	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
@@ -75,7 +79,7 @@ minetest.register_node("test_io:liquid", {
 			local mb = meta:get_int("mb")
 			if mb == 1000 then mb = 0 else mb = mb + 250 end
 			meta:set_int("mb", mb)
-			meta:set_string("infotext", mb.."mB")
+			set_infotext(meta, mb.."mB")
 		end
 	end
 })
