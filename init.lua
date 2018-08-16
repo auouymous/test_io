@@ -122,7 +122,9 @@ minetest.register_abm({
 			local mb = meta:get_int("mb")
 			if mb == 0 then return end
 
-			if node_io.can_take_liquid(take_pos, take_node, "D") and node_io.can_put_liquid(put_pos, put_node, "U") then
+			if node_io.can_take_liquid(take_pos, take_node, "D") and node_io.can_put_liquid(put_pos, put_node, "U")
+			and (mb >= 1000 or (node_io.accepts_millibuckets(take_pos, take_node, "D") and node_io.accepts_millibuckets(put_pos, put_node, "U")))
+			then
 				for i = 1, node_io.get_liquid_size(take_pos, take_node, "D") do
 					local item = node_io.get_liquid_name(take_pos, take_node, "D", i)
 					if item ~= "" then
