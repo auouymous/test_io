@@ -106,7 +106,7 @@ minetest.register_abm({
 				for i = 1, node_io.get_item_size(take_pos, take_node, "D") do
 					local stack = node_io.get_item_stack(take_pos, take_node, "D", i)
 					if stack then
-						local room = node_io.room_for_item(put_pos, put_node, "U", stack, n)
+						local room = node_io.can_put_item(put_pos, put_node, "U", stack, n)
 						if room > 0 then
 							local itemstack = node_io.take_item(take_pos, take_node, "D", nil, stack, room)
 							if itemstack then
@@ -132,7 +132,7 @@ minetest.register_abm({
 				for i = 1, node_io.get_liquid_size(take_pos, take_node, "D") do
 					local item = node_io.get_liquid_name(take_pos, take_node, "D", i)
 					if item ~= "" then
-						local room_mb = node_io.room_for_liquid(put_pos, put_node, "U", item, mb)
+						local room_mb = node_io.can_put_liquid(put_pos, put_node, "U", item, mb)
 						if room_mb > 0 then
 							local liquidstack = node_io.take_liquid(take_pos, take_node, "D", nil, item, room_mb)
 							if liquidstack then
