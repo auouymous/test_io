@@ -102,7 +102,7 @@ minetest.register_abm({
 			local n = meta:get_int("n")
 			if n == 0 then return end
 
-			if node_io.can_take_item(take_pos, take_node, "D") and node_io.can_put_item(put_pos, put_node, "U") then
+			if node_io.can_take_item(take_pos, take_node, "D") and node_io.can_put_item(put_pos, put_node, "U") == 1 then
 				for i = 1, node_io.get_item_size(take_pos, take_node, "D") do
 					local stack = node_io.get_item_stack(take_pos, take_node, "D", i)
 					if stack then
@@ -126,7 +126,7 @@ minetest.register_abm({
 			local mb = meta:get_int("mb")
 			if mb == 0 then return end
 
-			if node_io.can_take_liquid(take_pos, take_node, "D") and node_io.can_put_liquid(put_pos, put_node, "U")
+			if node_io.can_take_liquid(take_pos, take_node, "D") and node_io.can_put_liquid(put_pos, put_node, "U") == 1
 			and (mb >= 1000 or (node_io.accepts_millibuckets(take_pos, take_node, "D") and node_io.accepts_millibuckets(put_pos, put_node, "U")))
 			then
 				for i = 1, node_io.get_liquid_size(take_pos, take_node, "D") do
